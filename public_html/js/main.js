@@ -5,7 +5,7 @@ $(function(){
   
 var LastMsgTime = 12345678901234; // 14 digits
 var Adress = "00000000000000";
-var Smoke = false ;
+var Smoke = false;
 
 
 $.ajax({
