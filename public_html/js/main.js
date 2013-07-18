@@ -6,28 +6,32 @@ $(function(){
 var LastMsgTime = 12345678901234; // 14 digits
 var Adress = "00000000000000";
 var Smoke = false;
+var ReadingLoopTmrId = null;
 
 init();
 
 
 function init(){
-  ReadingLoop();
+  
+  ReadingLoopTmrId = setTimeout(ReadingLoop, 400);
+  //$.delay(400, ReadingLoop);
   
 }
 
 function ReadingLoop(){
+  clearTimeout(ReadingLoopTmrId); ReadingLoopTmrId = null;
   $.ajax({
   type: 'POST',
   data: {u:'Yvan', t:LastMsgTime, r:'1500', a:Adress}, 
   dataType: 'json',
   url: BASEPATH + "r.php",
-  success: function(json){MsgRcv(json);}
+  success: function(json){MsgRcv(json);},
+  error  : function(){ReadingLoopTmrId = setTimeout(ReadingLoop, 400);}
   });
-}setInterval(ReadingLoop, 4000);
+}
 
 
 function MsgRcv(json){
-
   $.each(json, function(){
     if(LastMsgTime <= this['t']){
        LastMsgTime = this['t'];
@@ -38,6 +42,7 @@ function MsgRcv(json){
     };
   });
   $('#ChatMsgListGrdUI').scrollTop(400);
+  ReadingLoopTmrId = setTimeout(ReadingLoop, 400);
 }
 
 
@@ -55,4 +60,9 @@ function DisplayTextinChatBox(Msg,ChatColor){
 }
 
 });
+
+
+
+
+
 
