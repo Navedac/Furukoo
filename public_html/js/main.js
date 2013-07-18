@@ -18,7 +18,7 @@ function init(){
 function ReadingLoop(){
   $.ajax({
   type: 'POST',
-  data: {u:'Yvan', t:LastMsgTime, r:'1500', a:'00000000000000'}, 
+  data: {u:'Yvan', t:LastMsgTime, r:'1500', a:Adress}, 
   dataType: 'json',
   url: BASEPATH + "r.php",
   success: function(json){MsgRcv(json);}
