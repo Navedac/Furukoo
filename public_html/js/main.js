@@ -39,9 +39,7 @@ function DisplayTextinChatBox(Msg,ChatColor){
     $('#ChatMsgListGrdUI').append(("<div class=smoke>" + Msg + "</div>"));
     Smoke=true;
   }
-  
-  // $('#ChatMsgListGrdUI').append(("<div>" + Msg + "</div>"));
-  
+
   
 }
 
