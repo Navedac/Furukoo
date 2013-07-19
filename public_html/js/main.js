@@ -13,13 +13,11 @@ init();
 
 function init(){
   
-  ReadingLoopTmrId = setTimeout(ReadingLoop, 400);
-  //$.delay(400, ReadingLoop);
+  ReadingLoop();
   
 }
 
 function ReadingLoop(){
-  clearTimeout(ReadingLoopTmrId); ReadingLoopTmrId = null;
   $.ajax({
   type: 'POST',
   data: {u:'Yvan', t:LastMsgTime, r:'1500', a:Adress}, 
