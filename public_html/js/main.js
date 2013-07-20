@@ -12,22 +12,22 @@ var rwc = null;
 init();
 
 function init(){
-  ReadingLoop();
+  readingLoop();
 }
 
-function ReadingLoop(){
+function readingLoop(){
   rwc = $.ajax({type:'POST', data:{u:'Yvan', t:LastMsgTime, r:'1500', a:Adress},
   dataType: 'json', timeout: 8000,
   url: BASEPATH + "r.php",
-  success: function(json){MsgRcv(json);},
-  error  : function(){rLoopTmrId=setTimeout(ReadingLoop,400);}
+  success: function(json){msgRcv(json);},
+  error  : function(){rLoopTmrId=setTimeout(readingLoop,400);}
   });
 }
 
-function MsgXmt(){
+function msgXmt(){
   rwc.abort();
-  // var msg = $('#msgTbx').val();
-  $.ajax({type:'POST', data:{d:'{"D":"' + $('#msgTbx').val() + '","U":"Yvan","c":2', t:LastMsgTime, s:0, a:Adress },
+  $.ajax({type:'POST',
+  data:{d:'{"D":"' + $('#msgTbx').val() + '","U":"Yvan","c":2', t:LastMsgTime, s:0, a:Adress},
   dataType: 'json', timeout: 2000,
   url: BASEPATH + "w.php",
   success: function(){},
@@ -36,7 +36,7 @@ function MsgXmt(){
 }
 
 
-function MsgRcv(json){
+function msgRcv(json){
   $.each(json, function(){
     if(LastMsgTime <= this['t']){
        LastMsgTime = this['t'];
@@ -47,7 +47,7 @@ function MsgRcv(json){
     };
   });
   $('#ChatMsgListGrdUI').scrollTop(400);
-  rLoopTmrId = setTimeout(ReadingLoop, 400);
+  rLoopTmrId = setTimeout(readingLoop, 400);
 }
 
 function DisplayTextinChatBox(Msg,ChatColor){
@@ -61,9 +61,16 @@ function DisplayTextinChatBox(Msg,ChatColor){
   }
 }
 
-$('#sendBtn').click(function(){
-  MsgXmt();
+$('#sendBtn').on("click", function(){
+  msgXmt();
   $('#msgTbx').val('');
+});
+
+$('#msgTbx').on("keyup", function(e){
+  if(e.keyCode === 13) {
+    msgXmt();
+    $('#msgTbx').val('');
+  }
 });
 
 });
