@@ -43,14 +43,14 @@ function msgRcv(json){
     }
     switch(this['s']){
       case 0 :
-        DisplayTextinChatBox(this['D'],0);
+        displayTextinChatBox(this['D'],0);
     };
   });
   $('#ChatMsgListGrdUI').scrollTop(400);
   rLoopTmrId = setTimeout(readingLoop, 400);
 }
 
-function DisplayTextinChatBox(Msg,ChatColor){
+function displayTextinChatBox(Msg,ChatColor){
   if(Smoke){
     $('#ChatMsgListGrdUI').append(("<div>" + Msg + "</div>"));
     Smoke=false;
