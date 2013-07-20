@@ -17,7 +17,7 @@ function init(){
 
 function readingLoop(){
   rwc = $.ajax({type:'POST', data:{u:'Yvan', t:LastMsgTime, r:'1500', a:Adress},
-  dataType: 'json', timeout: 8000,
+  dataType: 'json', timeout: 6000,
   url: BASEPATH + "r.php",
   success: function(json){msgRcv(json);},
   error  : function(){rLoopTmrId=setTimeout(readingLoop,400);}
@@ -28,7 +28,7 @@ function msgXmt(){
   rwc.abort();
   $.ajax({type:'POST',
   data:{d:'{"D":"' + $('#msgTbx').val() + '","U":"Yvan","c":2', t:LastMsgTime, s:0, a:Adress},
-  dataType: 'json', timeout: 2000,
+  dataType: 'json', timeout: 6000,
   url: BASEPATH + "w.php",
   success: function(){},
   error  : function(){}
