@@ -1,7 +1,7 @@
 var BASEPATH = "http://www.furukoo.fr/furukoov3/";
 
 
-$(function(){
+jQuery(function(){
   
 var LastMsgTime = 12345678901234; // 14 digits
 var Adress = "00000000000000";
@@ -16,7 +16,7 @@ function init(){
 }
 
 function readingLoop(){
-  rwc = $.ajax({type:'POST', data:{u:'Yvan', t:LastMsgTime, r:'1500', a:Adress},
+  rwc = jQuery.ajax({type:'POST', data:{u:'Yvan', t:LastMsgTime, r:'1500', a:Adress},
   dataType: 'json', timeout: 6000,
   url: BASEPATH + "r.php",
   success: function(json){msgRcv(json);},
@@ -26,8 +26,8 @@ function readingLoop(){
 
 function msgXmt(){
   rwc.abort();
-  $.ajax({type:'POST',
-  data:{d:'{"D":"' + $('#msgTbx').val() + '","U":"Yvan","c":2', t:LastMsgTime, s:0, a:Adress},
+  jQuery.ajax({type:'POST',
+  data:{d:'{"D":"' + jQuery('#msgTbx').val() + '","U":"Yvan","c":2', t:LastMsgTime, s:0, a:Adress},
   dataType: 'json', timeout: 6000,
   url: BASEPATH + "w.php",
   success: function(){},
@@ -37,7 +37,7 @@ function msgXmt(){
 
 
 function msgRcv(json){
-  $.each(json, function(){
+  jQuery.each(json, function(){
     if(LastMsgTime <= this['t']){
        LastMsgTime = this['t'];
     }
@@ -46,30 +46,30 @@ function msgRcv(json){
         displayTextinChatBox(this['D'],0);
     };
   });
-  $('#ChatMsgListGrdUI').scrollTop(400);
+  jQuery('#ChatMsgListGrdUI').scrollTop(400);
   rLoopTmrId = setTimeout(readingLoop, 400);
 }
 
 function displayTextinChatBox(Msg,ChatColor){
   if(Smoke){
-    $('#ChatMsgListGrdUI').append(("<div>" + Msg + "</div>"));
+    jQuery('#ChatMsgListGrdUI').append(("<div>" + Msg + "</div>"));
     Smoke=false;
   }
   else{
-    $('#ChatMsgListGrdUI').append(("<div class=smoke>" + Msg + "</div>"));
+    jQuery('#ChatMsgListGrdUI').append(("<div class=smoke>" + Msg + "</div>"));
     Smoke=true;
   }
 }
 
-$('#sendBtn').on("click", function(){
+jQuery('#sendBtn').on("click", function(){
   msgXmt();
-  $('#msgTbx').val('');
+   jQuery('#msgTbx').val('');
 });
 
-$('#msgTbx').on("keyup", function(e){
+jQuery('#msgTbx').on("keyup", function(e){
   if(e.keyCode === 13) {
     msgXmt();
-    $('#msgTbx').val('');
+     jQuery('#msgTbx').val('');
   }
 });
 
