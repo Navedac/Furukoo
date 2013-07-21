@@ -4,7 +4,7 @@ var LastMsgTime = 12345678901234; // 14 digits
 var Adress = "00000000000000";
 var Smoke = false;
 var rLoopTmrId = null;
-var rwc = null;
+// var rwc = null;
 
 $(function(){main();});
 
@@ -13,16 +13,22 @@ function main(){
 }
 
 function readingLoop(){
-  rwc = $.ajax({type:'POST', data:{u:'Yvan', t:LastMsgTime, r:'1500', a:Adress},
+  $.ajax({type:'POST', data:{u:'Yvan', t:LastMsgTime, r:'1500', a:Adress},
   dataType: 'text', timeout: 6000, cache: false,
   url: BASEPATH + "r.php",
   success: function(data){
-    if(data===""){
-      rLoopTmrId = setTimeout(readingLoop, 400);
-    }
-    else{}{
-      msgRcv($.parseJSON(data));
-    }
+    switch(data){
+      case "" : rLoopTmrId = setTimeout(readingLoop, 400); break;
+      default : 
+        console.log(data);
+        var j = $.parseJSON(data);
+        if(j===null){
+          console.log(j);
+          rLoopTmrId = setTimeout(readingLoop, 400);
+          break;
+        }
+        msgRcv($.parseJSON(data)); break;
+    };
   },
   error  : function(){rLoopTmrId = setTimeout(readingLoop, 400);}
   });
@@ -38,7 +44,7 @@ function msgRcv(json){
         displayTextinChatBox(this['D'],0);
     };
   });
-  $('#ChatMsgListGrdUI').scrollTop(400);
+  $('#ChatMsgListGrdUI').scrollTop(5000);
   rLoopTmrId = setTimeout(readingLoop, 400);
 }
 
@@ -54,26 +60,23 @@ function displayTextinChatBox(Msg,ChatColor){
 }
 
 function msgXmt(){
-  rwc.abort();
   $.ajax({type:'POST',
   data:{d:'{"D":"' + $('#msgTbx').val() + '","U":"Yvan","c":2', t:LastMsgTime, s:0, a:Adress},
   dataType: 'text', timeout: 6000, cache: false,
   url: BASEPATH + "w.php",
-  success: function(){},
-  error  : function(){}
+  success: function(){$('#msgTbx').val('');},
+  error  : function(){msgXmt();}
   });
-  rLoopTmrId = setTimeout(readingLoop, 400);
 }
 
 $('#sendBtn').on("click", function(){
   msgXmt();
-  $('#msgTbx').val('');
+  
 });
 
 $('#msgTbx').on("keyup", function(e){
   if(e.keyCode === 13) {
     msgXmt();
-    $('#msgTbx').val('');
   }
 });
 
