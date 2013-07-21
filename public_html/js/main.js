@@ -6,22 +6,25 @@ var Smoke = false;
 var rLoopTmrId = null;
 var rwc = null;
 
-$(function(){
-  
-init();
+$(function(){main();});
 
-});
-
-function init(){
+function main(){
   readingLoop();
 }
 
 function readingLoop(){
   rwc = $.ajax({type:'POST', data:{u:'Yvan', t:LastMsgTime, r:'1500', a:Adress},
-  dataType: 'json', timeout: 6000,
+  dataType: 'text', timeout: 6000, cache: false,
   url: BASEPATH + "r.php",
-  success: function(json){msgRcv(json);},
-  error  : function(){rLoopTmrId=setTimeout(readingLoop,400);}
+  success: function(data){
+    if(data===""){
+      rLoopTmrId = setTimeout(readingLoop, 400);
+    }
+    else{}{
+      msgRcv($.parseJSON(data));
+    }
+  },
+  error  : function(){rLoopTmrId = setTimeout(readingLoop, 400);}
   });
 }
 
@@ -54,11 +57,12 @@ function msgXmt(){
   rwc.abort();
   $.ajax({type:'POST',
   data:{d:'{"D":"' + $('#msgTbx').val() + '","U":"Yvan","c":2', t:LastMsgTime, s:0, a:Adress},
-  dataType: 'json', timeout: 6000,
+  dataType: 'text', timeout: 6000, cache: false,
   url: BASEPATH + "w.php",
   success: function(){},
   error  : function(){}
   });
+  rLoopTmrId = setTimeout(readingLoop, 400);
 }
 
 $('#sendBtn').on("click", function(){
