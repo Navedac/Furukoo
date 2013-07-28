@@ -7,26 +7,26 @@
     <link href="js/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
   </head>
   <body>
-    <div id="ContentGrd" class="container-fluid">
-      <div id="rf" class="row-fluid">
-        <div id="GameUI" class="span8">
+    <div id="ContentGrd" class="container">
+      <div id="rf" class="row">
+        <div id="GameUI" class="col-lg-8">
         <!--Sidebar content-->
           <p>Game UI</p>
         </div>
-        <div id="ChatUI" class="span4">
+        <div id="ChatUI" class="col-lg-4">
         <!--Body content-->
           <p >Chat UI</p>
           <div id="ChatHeadGrdUI">
             <p>Chat Header and Logo UI</p>
           </div>
-          <div id="ChatUsrListGrdUI">
-            <table class="table table-bordered">
+          <div id="ChatUsrListGrdUI" class="table-bordered">
+            <table id="ChatUsrListTbldUI" class="table table-bordered table-striped table-condensed">
               <thead>
                 <tr>
-                  <th>User Name</th>
-                  <th>Rate</th>
-                  <th>Game</th>
-                  <th></th>
+                  <th style="width: 90px">User Name</th>
+                  <th style="width: 60px">Rate</th>
+                  <th style="width: 60px">Game</th>
+                  <th style="width: auto"></th>
                 </tr>
               </thead>
               <tr>
@@ -49,40 +49,38 @@
               </tr>              
             </table>
           </div>
-          <div id="ChatMsgListGrdUI">
-
+          <div id="ChatMsgListGrdUI" class="table-bordered">
+            <table id="ChatMsgListTblUI" class="table table-bordered table-striped table-condensed">
+            </table>
           </div>
           <div id="ChatMsgInputGrdUI">
-            <input id ="msgTbx" type="text" class="input-append">
+            <input id ="msgTbx" type="text" class="form-control">
             <button id="sendBtn" type="button" class="btn pull-right">Send</button>              
           </div>           
         </div>
       </div>
     </div>
-        <!-- model content -->    
-    <div id="form-content" class="modal show fade in" >
-      <div class="modal-header">
-        <h4>Login</h4>
+    <!-- modal content -->    
+    <div id="LoginFrm" class="modal fade">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4>Login</h4>
+          </div>
+          <div class="modal-body">
+            <ul>
+              <li><label class="control-label">Pseudo</label><input id="lgiUsrNameLbl" class="form-control" value="Yvan" type="text" ></li>
+              <li><label class="control-label">Password</label><input id="lgiUsrPassLbl" class="form-control" value="yvan" type="password" ></li>
+              <li><label class="checkbox"><input type="checkbox">Remember me</label></li>
+            </ul> 
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-success" id="cnnBtn">Sign In</button>
+              <!--  <a href="#" class="btn" data-dismiss="modal"></a> --> 
+          </div>          
+        </div>
       </div>
-      <div>
-        <form class="contact">
-          <fieldset>
-            <div class="modal-body">
-              <ul class="nav nav-list">
-                <li class="nav-header">Pseudo</li>
-                <li><input class="input-medium" value="Guest" type="text" name="name"></li>
-                <li class="nav-header">Password</li>
-                <li><input class="input-medium" value="guest" type="text" name="Email"></li>
-                <li><label class="checkbox"><input type="checkbox"> Remember me </label></li>
-              </ul> 
-            </div>
-          </fieldset>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-success" id="submit">Sign In</button>
-        <a href="#" class="btn" data-dismiss="modal"></a>
-      </div>
+
     </div>
     <script src="js/jquery-1.9.0/jquery.min.js"></script>
     <script src="js/bootstrap/js/bootstrap.min.js"></script>
