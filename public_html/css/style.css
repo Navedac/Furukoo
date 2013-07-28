@@ -17,6 +17,7 @@ body,html{
 #ContentGrd{
   background: white;
   height: 100%;
+  display: none;
 }
 #rf {
   height: 100%;
@@ -53,4 +54,5 @@ body,html{
 .well{
   margin: 1px;
 }
+
 

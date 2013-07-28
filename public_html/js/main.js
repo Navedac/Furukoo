@@ -11,6 +11,8 @@ $(function(){main();});
 
 function main(){
   // readingLoop();
+  
+  $('#lgiUsrMailLbl').hide();;
   $('#LoginFrm').modal('show');
 }
 
@@ -83,6 +85,7 @@ function sendCnnMsgCptd(d){
       $('#LoginFrm').modal('hide');
       ELO_Initial = d.substr(4,4);
       LastMsgTime = d.substr(8);
+      $('#ContentGrd').show(1000);
       readingLoop();
       break;
     case 'DCN' :
