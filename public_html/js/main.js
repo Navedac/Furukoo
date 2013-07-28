@@ -4,12 +4,14 @@ var LastMsgTime = 12345678901234; // 14 digits
 var Adress = "00000000000000";
 var Smoke = false;
 var rLoopTmrId = null;
+var LoginFrm = 1500;
 // var rwc = null;
 
 $(function(){main();});
 
 function main(){
-  readingLoop();
+  // readingLoop();
+  $('#LoginFrm').modal('show');
 }
 
 function readingLoop(){
@@ -49,14 +51,8 @@ function msgRcv(json){
 }
 
 function displayTextinChatBox(Msg,ChatColor){
-  if(Smoke){
-    $('#ChatMsgListGrdUI').append(("<div>" + Msg + "</div>"));
-    Smoke=false;
-  }
-  else{
-    $('#ChatMsgListGrdUI').append(("<div class=smoke>" + Msg + "</div>"));
-    Smoke=true;
-  }
+  $('#ChatMsgListTblUI').append(("<tr><td>" + Msg + "</td></tr>"));
+
 }
 
 function msgXmt(){
@@ -69,16 +65,43 @@ function msgXmt(){
   });
 }
 
-$('#sendBtn').on("click", function(){
-  msgXmt();
-  
-});
+function sendCnnMsg(){
+  // $("#LoginFrm").css({opacity:0.5});
+  $.ajax({type:'POST',
+  data:{u:$('#lgiUsrNameLbl').val() , p:$('#lgiUsrPassLbl').val()},
+  dataType: 'text', timeout: 6000, cache: false,
+  url: BASEPATH + "c.php",
+  success: function(d){sendCnnMsgCptd(d);},
+  error  : function(){sendCnnMsg();}
+  });
+}
+function sendCnnMsgCptd(d){
+  var s = d.substr(0,3);
+  switch(s){
+    case 'CON' :
+      console.log(s);
+      $('#LoginFrm').modal('hide');
+      ELO_Initial = d.substr(4,4);
+      LastMsgTime = d.substr(8);
+      readingLoop();
+      break;
+    case 'DCN' :
+      $("#LoginFrm").css({opacity:1});
+      console.log(s);
+      break;
+    case 'USR' :
+      console.log(s);
+      break;
+    case 'NUR' :
+      console.log(s);
+      break;
+  };
+}
 
-$('#msgTbx').on("keyup", function(e){
-  if(e.keyCode === 13) {
-    msgXmt();
-  }
-});
+
+$('#sendBtn').on("click", function(){msgXmt();});
+$('#msgTbx').on("keyup", function(e){if(e.keyCode === 13){msgXmt();}});
+$('#cnnBtn').on("click", function(){sendCnnMsg();});
 
 
 
