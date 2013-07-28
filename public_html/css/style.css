@@ -14,11 +14,6 @@ body,html{
   height: 100px;
 }
 
-.fancy {
-  font-family: sans-serif;
-  font-size: 16px;
-  padding: 0px;
-}
 #ContentGrd{
   background: white;
   height: 100%;
@@ -35,9 +30,19 @@ body,html{
   background: white;
   margin-bottom: 0;
 }
-#ChatMsgListGrdUI{
-  height: 40%;
+#ChatUsrListGrdUI{
+  height: 35%;
   overflow-y: scroll;
+}
+#ChatUsrListTbldUI{
+  margin:-1px;
+}  
+#ChatMsgListGrdUI{
+  height: 35%;
+  overflow-y: scroll;
+}
+#ChatMsgListTblUI{
+  margin:-1px;
 }
 #msgTbx{
   width: 80%;
