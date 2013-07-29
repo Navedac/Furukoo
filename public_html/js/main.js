@@ -5,6 +5,7 @@ var Adress = "00000000000000";
 var Smoke = false;
 var rLoopTmrId = null;
 var LoginFrm = 1500;
+var createAcc = false;
 // var rwc = null;
 
 $(function(){main();});
@@ -13,6 +14,7 @@ function main(){
   // readingLoop();
   
   $('#lgiUsrMailLbl').hide();;
+  $('#lgiUsrMailIpt').hide();;
   $('#LoginFrm').modal('show');
 }
 
@@ -67,44 +69,11 @@ function msgXmt(){
   });
 }
 
-function sendCnnMsg(){
-  // $("#LoginFrm").css({opacity:0.5});
-  $.ajax({type:'POST',
-  data:{u:$('#lgiUsrNameLbl').val() , p:$('#lgiUsrPassLbl').val()},
-  dataType: 'text', timeout: 6000, cache: false,
-  url: BASEPATH + "c.php",
-  success: function(d){sendCnnMsgCptd(d);},
-  error  : function(){sendCnnMsg();}
-  });
-}
-function sendCnnMsgCptd(d){
-  var s = d.substr(0,3);
-  switch(s){
-    case 'CON' :
-      console.log(s);
-      $('#LoginFrm').modal('hide');
-      ELO_Initial = d.substr(4,4);
-      LastMsgTime = d.substr(8);
-      $('#ContentGrd').show(1000);
-      readingLoop();
-      break;
-    case 'DCN' :
-      $("#LoginFrm").css({opacity:1});
-      console.log(s);
-      break;
-    case 'USR' :
-      console.log(s);
-      break;
-    case 'NUR' :
-      console.log(s);
-      break;
-  };
-}
-
 
 $('#sendBtn').on("click", function(){msgXmt();});
 $('#msgTbx').on("keyup", function(e){if(e.keyCode === 13){msgXmt();}});
 $('#cnnBtn').on("click", function(){sendCnnMsg();});
+$('#cacBtn').on('click',function(){sendCacMsg();});
 
 
 
