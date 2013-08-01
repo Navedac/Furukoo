@@ -2,7 +2,7 @@
 function sendCnnMsg(){
   $("#LoginFrm").css({opacity:0.5});
   $.ajax({type:'POST',
-  data:{u:$('#lgiUsrNameLbl').val() , p:$('#lgiUsrPassLbl').val()},
+  data:{u:$('#lgiUsrNameIpt').val() , p:$('#lgiUsrPassIpt').val()},
   dataType: 'text', timeout: 6000, cache: false,
   url: BASEPATH + "c.php",
   success: function(d){sendCnnMsgCptd(d);},
@@ -30,20 +30,30 @@ function sendCnnMsgCptd(d){
       break;
     case 'NUR' :
       console.log(s);
+      sendCnnMsg();
       break;
   };
 }
 
 function sendCacMsg(){
-  switch(createAcc){
-    case true :
+  switch($('#cacBtn').text()){
+    case 'Submit' :
+      $("#LoginFrm").css({opacity:0.5});
+      $.ajax({type:'POST',
+        data:{u:$('#lgiUsrNameIpt').val(),p:$('#lgiUsrPassIpt').val(), m:$('#lgiUsrMailIpt').val()},
+        dataType: 'text', timeout: 6000, cache: false,
+        url: BASEPATH + "adduser.php",
+        success: function(d){sendCnnMsgCptd(d);},
+        error  : function(){sendCacMsg();}
+      });
       break;
-    case false :
-      createAcc = true;
+    default :
       $('#cnnBtn').hide();
       $('#lgiUsrMailLbl').show();
       $('#lgiUsrMailIpt').show();
-      $('#cacBtn').text('Sign Up');
+      $('#cacBtn').text('Submit');
       break;
   }
 }
+
+

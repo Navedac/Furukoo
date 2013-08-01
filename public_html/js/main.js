@@ -5,7 +5,7 @@ var Adress = "00000000000000";
 var Smoke = false;
 var rLoopTmrId = null;
 var LoginFrm = 1500;
-var createAcc = false;
+
 // var rwc = null;
 
 $(function(){main();});
