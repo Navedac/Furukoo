@@ -19,6 +19,7 @@ function sendCnnMsgCptd(d){
       ELO_Initial = d.substr(4,4);
       LastMsgTime = d.substr(8);
       $('#ContentGrd').fadeIn(1000);
+      $('#UserNameTblUI').append(("<tr><td>" + $('#lgiUsrNameIpt').val() + "</td></tr>"));
       readingLoop();
       break;
     case 'DCN' :
